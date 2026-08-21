@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A fan page celebrating the cinematic music of The Weeknd.">
+    <title>The Weeknd | Fan Page</title>
+
+    <style>
+        /* ---------- 1. COLOUR PALETTE & DEFAULT STYLES ---------- */
+        :root {
+            --ink: #fff7f4;
+            --muted: #cfc5c3;
+            --background: #0b090a;
+            --surface: rgba(255, 255, 255, 0.08);
+            --surface-strong: #1c1516;
+            --accent: #ed5148;
+            --accent-two: #e5a25e;
+            --button-ink: #160b0b;
+            --line: rgba(255, 255, 255, 0.16);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+        }
+
+        /* These colours are used when the visitor switches to light mode. */
+        body.light-theme {
+            --ink: #251a1a;
+            --muted: #6d5b59;
+            --background: #fff7f1;
+            --surface: rgba(255, 255, 255, 0.72);
+            --surface-strong: #ffffff;
+            --accent: #ba2d29;
+            --accent-two: #9b521e;
+            --button-ink: #ffffff;
+            --line: rgba(43, 29, 43, 0.14);
+            --shadow: 0 20px 60px rgba(95, 50, 70, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 85% 10%, rgba(229, 162, 94, 0.14), transparent 28rem),
+                radial-gradient(circle at 10% 45%, rgba(237, 81, 72, 0.18), transparent 26rem),
+                var(--background);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        main,
+        footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Moving concert frames sit behind the page content. */
+        .concert-background {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .concert-background::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 15%, var(--background) 92%);
+            opacity: 0.58;
+        }
+
+        .concert-frame {
+            --angle: 3deg;
+            --travel-x: -24px;
+            position: absolute;
+            width: clamp(250px, 31vw, 450px);
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            opacity: 0.13;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
+            mix-blend-mode: screen;
+            animation: concert-float 18s ease-in-out infinite alternate;
+        }
+
+        .concert-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.75) contrast(1.15);
+            transform: scale(1.14);
+            animation: concert-pan 12s ease-in-out infinite alternate;
+        }
+
+        .concert-frame span {
+            position: absolute;
+            right: 13px;
+            bottom: 11px;
+            padding: 4px 8px;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.68);
+            border-radius: 99px;
+            font-size: 0.58rem;
+            font-weight: bold;
+            letter-spacing: 0.13em;
+        }
+
+        .concert-frame span::before {
+            content: "";
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            margin-right: 6px;
+            background: #ff4f45;
+            border-radius: 50%;
+            vertical-align: 1px;
+            animation: record-blink 1.4s ease-in-out infinite;
+        }
+
+        .frame-one {
+            top: 9vh;
+            right: -6vw;
+            --angle: 4deg;
+        }
+
+        .frame-two {
+            top: 45vh;
+            left: -8vw;
+            --angle: -5deg;
+            --travel-x: 28px;
+            animation-duration: 22s;
+            animation-delay: -7s;
+        }
+
+        .frame-three {
+            right: 12vw;
+            bottom: -7vh;
+            --angle: -2deg;
+            --travel-x: 18px;
+            animation-duration: 20s;
+            animation-delay: -12s;
+        }
+
+        body.light-theme .concert-frame {
+            opacity: 0.07;
+            mix-blend-mode: multiply;
+        }
+
+        @keyframes concert-float {
+            from {
+                transform: translate3d(0, -12px, 0) rotate(var(--angle));
+            }
+            to {
+                transform: translate3d(var(--travel-x), 24px, 0) rotate(var(--angle));
+            }
+        }
+
+        @keyframes concert-pan {
+            from {
+                transform: scale(1.14) translate3d(-2%, -2%, 0);
+            }
+            to {
+                transform: scale(1.24) translate3d(3%, 2%, 0);
+            }
+        }
+
+        @keyframes record-blink {
+            50% {
+                opacity: 0.25;
+            }
+        }
+
+        a {
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin-inline: auto;
+        }
+
+        .skip-link {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 100;
+            padding: 10px 16px;
+            color: #20121f;
+            background: #ffffff;
+            border-radius: 99px;
+            transform: translateY(-150%);
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        /* ---------- 2. NAVIGATION ---------- */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            border-bottom: 1px solid var(--line);
+            background: color-mix(in srgb, var(--background) 82%, transparent);
+            backdrop-filter: blur(16px);
+        }
+
+        .nav {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .logo {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.35rem;
+            font-weight: bold;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.92rem;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: var(--ink);
+        }
+
+        .theme-button {
+            width: 42px;
+            height: 42px;
+            color: var(--ink);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .theme-button:hover {
+            transform: rotate(10deg) scale(1.06);
+            background: var(--surface-strong);
+        }
+
+        /* ---------- 3. HERO ---------- */
+        .hero {
+            min-height: calc(100vh - 72px);
+            padding-block: 70px 90px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: clamp(48px, 8vw, 100px);
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: bold;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 36px;
+            height: 1px;
+            background: currentColor;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            line-height: 1.05;
+        }
+
+        h1 {
+            max-width: 750px;
+            font-size: clamp(4rem, 10vw, 8.7rem);
+            font-weight: 400;
+            letter-spacing: -0.065em;
+        }
+
+        h1 span {
+            display: block;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .hero-copy > p:not(.eyebrow) {
+            max-width: 590px;
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: clamp(1rem, 2vw, 1.15rem);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 32px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            padding: 0 22px;
+            color: var(--button-ink);
+            background: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 99px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(237, 81, 72, 0.22);
+        }
+
+        .button.secondary {
+            color: var(--ink);
+            background: transparent;
+            border-color: var(--line);
+        }
+
+        .portrait-wrap {
+            position: relative;
+            max-width: 475px;
+            justify-self: end;
+        }
+
+        .portrait-wrap::before {
+            content: "XO";
+            position: absolute;
+            top: -62px;
+            right: -30px;
+            z-index: -1;
+            color: transparent;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 8rem;
+            font-weight: bold;
+            line-height: 1;
+            -webkit-text-stroke: 1px var(--line);
+        }
+
+        .portrait-card {
+            padding: 12px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 230px 230px 26px 26px;
+            box-shadow: var(--shadow);
+            transform: rotate(2deg);
+        }
+
+        .portrait-card img {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            object-position: 56% center;
+            border-radius: 220px 220px 18px 18px;
+            filter: saturate(0.86) contrast(1.03);
+        }
+
+        .portrait-note {
+            position: absolute;
+            bottom: 40px;
+            left: -42px;
+            padding: 14px 18px;
+            color: #211313;
+            background: #f4c981;
+            box-shadow: var(--shadow);
+            font-family: Georgia, "Times New Roman", serif;
+            font-style: italic;
+            transform: rotate(-6deg);
+        }
+
+        /* ---------- 4. SHARED SECTION STYLES ---------- */
+        section:not(.hero) {
+            padding-block: 105px;
+        }
+
+        .section-heading {
+            display: grid;
+            grid-template-columns: 0.7fr 1.3fr;
+            gap: 40px;
+            align-items: end;
+            margin-bottom: 50px;
+        }
+
+        .section-number {
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: bold;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            max-width: 750px;
+            font-size: clamp(2.7rem, 6vw, 5.4rem);
+            font-weight: 400;
+            letter-spacing: -0.045em;
+        }
+
+        /* ---------- 5. BIOGRAPHY ---------- */
+        .bio-section {
+            border-block: 1px solid var(--line);
+        }
+
+        .bio-grid {
+            display: grid;
+            grid-template-columns: 0.7fr 1.3fr;
+            gap: 40px;
+        }
+
+        .bio-intro {
+            color: var(--accent-two);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.45rem;
+            line-height: 1.45;
+        }
+
+        .bio-copy {
+            max-width: 750px;
+            color: var(--muted);
+            font-size: 1.04rem;
+        }
+
+        .bio-copy p + p {
+            margin-top: 18px;
+        }
+
+        .quick-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            margin-top: 52px;
+            overflow: hidden;
+            background: var(--line);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+        }
+
+        .detail {
+            padding: 26px;
+            background: var(--surface-strong);
+        }
+
+        .detail small {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--muted);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .detail strong {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.25rem;
+            font-weight: normal;
+        }
+
+        /* ---------- 6. INTERACTIVE MUSICAL CHAPTER EXPLORER ---------- */
+        .eras-layout {
+            display: grid;
+            grid-template-columns: 0.75fr 1.25fr;
+            gap: 28px;
+        }
+
+        .era-buttons {
+            display: grid;
+            gap: 10px;
+        }
+
+        .era-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 17px 20px;
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .era-button:hover {
+            color: var(--ink);
+            transform: translateX(4px);
+        }
+
+        .era-button.active {
+            color: var(--button-ink);
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .era-button span:last-child {
+            font-size: 1.2rem;
+        }
+
+        .era-display {
+            position: relative;
+            min-height: 365px;
+            display: grid;
+            grid-template-columns: minmax(180px, 0.8fr) 1.2fr;
+            align-items: center;
+            gap: clamp(24px, 4vw, 48px);
+            overflow: hidden;
+            padding: clamp(24px, 4vw, 42px);
+            background: linear-gradient(135deg, var(--era-color, #74221f), var(--surface-strong));
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            transition: background 0.35s ease;
+        }
+
+        .era-display::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, transparent 35%, rgba(0, 0, 0, 0.22));
+            pointer-events: none;
+        }
+
+        .era-cover-wrap {
+            position: relative;
+            z-index: 1;
+        }
+
+        .era-cover {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.38);
+        }
+
+        .era-cover.cover-changing {
+            animation: cover-reveal 0.45s ease;
+        }
+
+        .era-copy {
+            position: relative;
+            z-index: 1;
+        }
+
+        .era-year {
+            display: inline-block;
+            margin-bottom: 28px;
+            padding: 6px 12px;
+            color: #211313;
+            background: rgba(255, 255, 255, 0.78);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.12em;
+        }
+
+        .era-display h3 {
+            margin-bottom: 20px;
+            font-size: clamp(2.1rem, 4.5vw, 4.2rem);
+            font-weight: 400;
+            letter-spacing: -0.04em;
+        }
+
+        .era-description {
+            max-width: 610px;
+            color: var(--ink);
+            font-size: 1.05rem;
+        }
+
+        @keyframes cover-reveal {
+            from {
+                opacity: 0;
+                transform: scale(0.92) rotate(-2deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        /* ---------- 7. MOOD MATCHER ---------- */
+        .matcher-section {
+            border-top: 1px solid var(--line);
+        }
+
+        .matcher-grid {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 28px;
+        }
+
+        .mood-panel,
+        .mood-result {
+            padding: clamp(28px, 5vw, 52px);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+        }
+
+        .mood-panel {
+            background: var(--surface);
+        }
+
+        .mood-prompt {
+            margin-bottom: 24px;
+            color: var(--muted);
+            font-size: 1.02rem;
+        }
+
+        .mood-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .mood-button {
+            min-height: 58px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 11px;
+            padding: 12px 15px;
+            color: var(--ink);
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .mood-icon {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            color: var(--accent-two);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            transition: color 0.2s ease, background 0.2s ease;
+        }
+
+        .mood-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .mood-name {
+            font-weight: bold;
+            line-height: 1.25;
+        }
+
+        .mood-arrow {
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        .mood-button:hover {
+            background: var(--surface-strong);
+            transform: translateY(-2px);
+        }
+
+        .mood-button.active {
+            color: var(--button-ink);
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .mood-button.active .mood-icon {
+            color: var(--button-ink);
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.28);
+        }
+
+        .mood-button.active .mood-arrow {
+            color: currentColor;
+        }
+
+        .mood-result {
+            position: relative;
+            min-height: 330px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 86% 24%, var(--match-color, #8f201c), transparent 42%),
+                var(--surface-strong);
+            box-shadow: var(--shadow);
+            transition: background 0.35s ease;
+        }
+
+        .mood-result::after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            right: -75px;
+            bottom: -95px;
+            width: 260px;
+            height: 260px;
+            border: 38px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 1px var(--line), 0 0 0 1px var(--line);
+        }
+
+        .match-cover {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.42;
+            filter: brightness(0.48) saturate(0.8);
+            transform: scale(1.06);
+        }
+
+        .match-cover.match-cover-changing {
+            animation: match-cover-reveal 0.55s ease;
+        }
+
+        .match-label,
+        #match-song,
+        #match-reason {
+            position: relative;
+            z-index: 2;
+        }
+
+        .match-label {
+            margin-bottom: 14px;
+            color: var(--accent-two);
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        #match-song {
+            margin-bottom: 18px;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 400;
+            letter-spacing: -0.045em;
+        }
+
+        #match-reason {
+            max-width: 520px;
+            color: var(--muted);
+            font-size: 1.02rem;
+        }
+
+        .match-shuffle {
+            position: relative;
+            z-index: 2;
+            align-self: flex-start;
+            margin-top: 28px;
+        }
+
+        .mood-result.is-changing #match-song,
+        .mood-result.is-changing #match-reason {
+            animation: match-reveal 0.45s ease both;
+        }
+
+        .mood-result.is-changing #match-reason {
+            animation-delay: 0.06s;
+        }
+
+        @keyframes match-reveal {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes match-cover-reveal {
+            from {
+                opacity: 0;
+                transform: scale(1.14);
+            }
+            to {
+                opacity: 0.42;
+                transform: scale(1.06);
+            }
+        }
+
+        /* ---------- 8. RANDOM FACT GENERATOR ---------- */
+        .facts-section {
+            border-top: 1px solid var(--line);
+        }
+
+        .fact-card {
+            position: relative;
+            min-height: 320px;
+            display: grid;
+            place-items: center;
+            padding: clamp(38px, 8vw, 90px);
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            text-align: center;
+        }
+
+        .fact-card::before,
+        .fact-card::after {
+            content: "✦";
+            position: absolute;
+            color: var(--accent);
+            font-size: 5rem;
+            opacity: 0.22;
+        }
+
+        .fact-card::before {
+            top: 18px;
+            left: 28px;
+        }
+
+        .fact-card::after {
+            right: 28px;
+            bottom: 18px;
+        }
+
+        .fact-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        #fact-text {
+            max-width: 810px;
+            margin-bottom: 30px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.65rem, 4vw, 2.8rem);
+            line-height: 1.28;
+        }
+
+        .sparkle {
+            position: fixed;
+            z-index: 100;
+            pointer-events: none;
+            animation: sparkle-pop 0.8s ease-out forwards;
+        }
+
+        @keyframes sparkle-pop {
+            from {
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg) scale(0.5);
+            }
+            to {
+                opacity: 0;
+                transform: translate(var(--x), var(--y)) rotate(180deg) scale(1.2);
+            }
+        }
+
+        /* ---------- 9. FOOTER ---------- */
+        footer {
+            padding-block: 34px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        footer a:hover {
+            color: var(--ink);
+        }
+
+        /* ---------- 10. SMALL SCREENS ---------- */
+        @media (max-width: 800px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero,
+            .section-heading,
+            .bio-grid,
+            .eras-layout,
+            .matcher-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .era-display {
+                grid-template-columns: 1fr;
+            }
+
+            .era-cover-wrap {
+                width: min(100%, 330px);
+            }
+
+            .hero {
+                padding-top: 48px;
+            }
+
+            .portrait-wrap {
+                width: min(90%, 475px);
+                justify-self: center;
+            }
+
+            .portrait-note {
+                left: -18px;
+            }
+
+            .section-heading,
+            .bio-grid {
+                gap: 22px;
+            }
+
+            .quick-details {
+                grid-template-columns: 1fr;
+            }
+
+            .mood-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .concert-frame {
+                width: 270px;
+                opacity: 0.09;
+            }
+
+            .frame-two {
+                left: -150px;
+            }
+
+            .frame-three {
+                right: -125px;
+            }
+
+            .footer-row {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .concert-frame,
+            .concert-frame img {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="concert-background" aria-hidden="true">
+        <figure class="concert-frame frame-one">
+            <img src="public/images/weeknd-stage.jpg" alt="">
+            <span>LIVE / PARIS</span>
+        </figure>
+        <figure class="concert-frame frame-two">
+            <img src="public/images/weeknd-monochrome.jpg" alt="">
+            <span>LIVE / QUÉBEC</span>
+        </figure>
+        <figure class="concert-frame frame-three">
+            <img src="public/images/the-weeknd.jpg" alt="">
+            <span>LIVE / SEATTLE</span>
+        </figure>
+    </div>
+
+    <header class="site-header">
+        <nav class="nav container" aria-label="Main navigation">
+            <a class="logo" href="#top">XO ✦</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#eras">The chapters</a></li>
+                <li><a href="#matcher">Mood match</a></li>
+                <li><a href="#facts">Fun facts</a></li>
+            </ul>
+            <button class="theme-button" id="theme-button" type="button"
+                aria-label="Switch to light theme" aria-pressed="false">☀</button>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="hero container" id="top">
+            <div class="hero-copy">
+                <p class="eyebrow">A fan-made celebration</p>
+                <h1>The <span>Weeknd</span></h1>
+                <p>
+                    Singer. Producer. World-builder. A celebration of the artist who turned
+                    late-night R&amp;B into a cinematic universe heard around the world.
+                </p>
+                <div class="hero-actions">
+                    <a class="button" href="#eras">Explore the chapters ↓</a>
+                    <a class="button secondary" href="#facts">Tell me a fact</a>
+                </div>
+            </div>
+
+            <div class="portrait-wrap">
+                <figure class="portrait-card">
+                    <img src="public/images/the-weeknd.jpg"
+                        alt="The Weeknd performing on stage with a microphone"
+                        width="960" height="640">
+                </figure>
+                <p class="portrait-note">after hours, always ✦</p>
+            </div>
+        </section>
+
+        <section class="bio-section" id="about">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="section-number">01 — The story</p>
+                    <h2>From mystery uploads to stadium lights.</h2>
+                </div>
+
+                <div class="bio-grid">
+                    <p class="bio-intro">
+                        His signature? A soaring falsetto inside a dark, neon-lit universe.
+                    </p>
+                    <div class="bio-copy">
+                        <p>
+                            Abel Makkonen Tesfaye, known professionally as The Weeknd, is a
+                            Canadian singer, songwriter and producer born on 16 February 1990.
+                            He first drew attention by uploading music anonymously before his
+                            2011 mixtapes introduced a shadowy new sound in alternative R&amp;B.
+                        </p>
+                        <p>
+                            His music blends R&amp;B, pop and electronic production with recurring
+                            characters and cinematic visuals. From the darkness of Trilogy to the
+                            bright synths of After Hours, each album feels like another chapter
+                            in the same restless, late-night story.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quick-details" aria-label="Quick details about The Weeknd">
+                    <div class="detail">
+                        <small>Born</small>
+                        <strong>16 February 1990</strong>
+                    </div>
+                    <div class="detail">
+                        <small>Hometown</small>
+                        <strong>Scarborough, Toronto</strong>
+                    </div>
+                    <div class="detail">
+                        <small>Known for</small>
+                        <strong>Cinematic R&amp;B &amp; pop</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="eras">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="section-number">02 — The chapters</p>
+                    <h2>A story told after dark.</h2>
+                </div>
+
+                <div class="eras-layout">
+                    <div class="era-buttons" aria-label="Choose a chapter from The Weeknd's music">
+                        <button class="era-button active" type="button"
+                            data-title="House of Balloons" data-year="2011"
+                            data-color="#4c3e48"
+                            data-cover="public/images/cover-house-of-balloons.jpg"
+                            data-cover-alt="House of Balloons cover artwork"
+                            data-description="Mysterious online releases, warped samples and haunting vocals introduced a darker, atmospheric kind of R&amp;B."
+                            aria-pressed="true">
+                            <span>House of Balloons</span><span>01</span>
+                        </button>
+                        <button class="era-button" type="button"
+                            data-title="Trilogy" data-year="2012"
+                            data-color="#292929"
+                            data-cover="public/images/cover-trilogy.jpg"
+                            data-cover-alt="Trilogy cover artwork"
+                            data-description="The three 2011 mixtapes were remastered and collected with new songs, capturing the complete sound of his mysterious early period."
+                            aria-pressed="false">
+                            <span>Trilogy</span><span>02</span>
+                        </button>
+                        <button class="era-button" type="button"
+                            data-title="Kiss Land" data-year="2013"
+                            data-color="#174e47"
+                            data-cover="public/images/cover-kiss-land.jpg"
+                            data-cover-alt="Kiss Land cover artwork"
+                            data-description="Neon-lit production and cinematic tension shaped a debut studio album inspired by touring, isolation and unfamiliar places."
+                            aria-pressed="false">
+                            <span>Kiss Land</span><span>03</span>
+                        </button>
+                        <button class="era-button" type="button"
+                            data-title="Beauty Behind the Madness" data-year="2015"
+                            data-color="#8b562c"
+                            data-cover="public/images/cover-beauty.jpg"
+                            data-cover-alt="Beauty Behind the Madness cover artwork"
+                            data-description="Dark R&amp;B met arena-sized pop, bringing his falsetto, dramatic production and unforgettable hooks to a much wider audience."
+                            aria-pressed="false">
+                            <span>Beauty Behind Madness</span><span>04</span>
+                        </button>
+                        <button class="era-button" type="button"
+                            data-title="Starboy" data-year="2016"
+                            data-color="#384b80"
+                            data-cover="public/images/cover-starboy.jpg"
+                            data-cover-alt="Starboy cover artwork"
+                            data-description="Sleek electronic production and a sharper pop identity created a futuristic chapter shaped by fame, speed and reinvention."
+                            aria-pressed="false">
+                            <span>Starboy</span><span>05</span>
+                        </button>
+                        <button class="era-button" type="button"
+                            data-title="After Hours" data-year="2020"
+                            data-color="#8f201c"
+                            data-cover="public/images/cover-after-hours.jpg"
+                            data-cover-alt="After Hours cover artwork"
+                            data-description="A red-suited character, neon 1980s synths and connected music videos turned heartbreak into his most cinematic era yet."
+                            aria-pressed="false">
+                            <span>After Hours</span><span>06</span>
+                        </button>
+                        <button class="era-button" type="button"
+                            data-title="Dawn FM" data-year="2022"
+                            data-color="#536b73"
+                            data-cover="public/images/cover-dawn-fm.jpg"
+                            data-cover-alt="Dawn FM cover artwork"
+                            data-description="A conceptual radio broadcast from purgatory paired bright dance-pop production with a journey toward acceptance."
+                            aria-pressed="false">
+                            <span>Dawn FM</span><span>07</span>
+                        </button>
+                        <button class="era-button" type="button"
+                            data-title="Hurry Up Tomorrow" data-year="2025"
+                            data-color="#5e352d"
+                            data-cover="public/images/cover-hurry-up-tomorrow.jpg"
+                            data-cover-alt="Hurry Up Tomorrow cover artwork"
+                            data-description="The final chapter of the After Hours trilogy confronts identity, memory and rebirth while bringing The Weeknd persona toward a conclusion."
+                            aria-pressed="false">
+                            <span>Hurry Up Tomorrow</span><span>08</span>
+                        </button>
+                    </div>
+
+                    <article class="era-display" id="era-display" aria-live="polite">
+                        <figure class="era-cover-wrap">
+                            <img class="era-cover" id="era-cover"
+                                src="public/images/cover-house-of-balloons.jpg"
+                                alt="House of Balloons cover artwork" width="600" height="600">
+                        </figure>
+                        <div class="era-copy">
+                            <span class="era-year" id="era-year">2011</span>
+                            <h3 id="era-title">House of Balloons</h3>
+                            <p class="era-description" id="era-description">
+                                Mysterious online releases, warped samples and haunting vocals
+                                introduced a darker, atmospheric kind of R&amp;B.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="matcher-section" id="matcher">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="section-number">03 — Mood matcher</p>
+                    <h2>Find your track for tonight.</h2>
+                </div>
+
+                <div class="matcher-grid">
+                    <div class="mood-panel">
+                        <p class="mood-prompt">
+                            Pick the mood that fits right now. Your Weeknd song match will
+                            appear beside it.
+                        </p>
+                        <div class="mood-buttons" aria-label="Choose your current mood">
+                            <button class="mood-button" type="button"
+                                data-song="Blinding Lights" data-color="#a61f19"
+                                data-cover="public/images/cover-after-hours.jpg"
+                                data-reason="Neon synths and unstoppable momentum for a city drive after dark."
+                                aria-pressed="false">
+                                <span class="mood-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <path d="M3 20V11h5v9M8 15h5v5M13 9h8v11M5 14h1M5 17h1M16 12h2M16 15h2" />
+                                        <path d="M4 7a4 4 0 0 0 5-5 4.5 4.5 0 1 1-5 5Z" />
+                                    </svg>
+                                </span>
+                                <span class="mood-name">Late-night drive</span>
+                                <span class="mood-arrow" aria-hidden="true">↗</span>
+                            </button>
+                            <button class="mood-button" type="button"
+                                data-song="Call Out My Name" data-color="#482337"
+                                data-cover="public/images/cover-my-dear-melancholy.jpg"
+                                data-reason="A slow, dramatic track for sitting with a heartbreak instead of running from it."
+                                aria-pressed="false">
+                                <span class="mood-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <path d="M12 21S3 15.5 3 9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-9 12-9 12Z" />
+                                        <path d="m12 6-2 5 4 2-2 4" />
+                                    </svg>
+                                </span>
+                                <span class="mood-name">Quiet heartbreak</span>
+                                <span class="mood-arrow" aria-hidden="true">↗</span>
+                            </button>
+                            <button class="mood-button" type="button"
+                                data-song="Starboy" data-color="#304f85"
+                                data-cover="public/images/cover-starboy.jpg"
+                                data-reason="Confident, sleek and built for walking into the room like you own it."
+                                aria-pressed="false">
+                                <span class="mood-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z" />
+                                    </svg>
+                                </span>
+                                <span class="mood-name">Main-character energy</span>
+                                <span class="mood-arrow" aria-hidden="true">↗</span>
+                            </button>
+                            <button class="mood-button" type="button"
+                                data-song="Out of Time" data-color="#84652d"
+                                data-cover="public/images/cover-dawn-fm.jpg"
+                                data-reason="Warm, dreamy production for when nostalgia feels a little too real."
+                                aria-pressed="false">
+                                <span class="mood-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <path d="M4 14h16M2 18h20M7 14a5 5 0 0 1 10 0M12 3v3M4.5 6.5l2 2M19.5 6.5l-2 2" />
+                                    </svg>
+                                </span>
+                                <span class="mood-name">Dreamy escape</span>
+                                <span class="mood-arrow" aria-hidden="true">↗</span>
+                            </button>
+                            <button class="mood-button" type="button"
+                                data-song="The Hills" data-color="#49211f"
+                                data-cover="public/images/cover-beauty.jpg"
+                                data-reason="Heavy bass and eerie atmosphere for your darkest, most mysterious mood."
+                                aria-pressed="false">
+                                <span class="mood-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <path d="M20 15.5A8 8 0 0 1 8.5 4 8 8 0 1 0 20 15.5Z" />
+                                        <path d="M17 4v3M15.5 5.5h3" />
+                                    </svg>
+                                </span>
+                                <span class="mood-name">Dark &amp; mysterious</span>
+                                <span class="mood-arrow" aria-hidden="true">↗</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <article class="mood-result" id="mood-result" aria-live="polite">
+                        <img class="match-cover" id="match-cover" src="public/images/cover-after-hours.jpg" alt="" aria-hidden="true">
+                        <span class="match-label">Your match</span>
+                        <h3 id="match-song">Choose a mood</h3>
+                        <p id="match-reason">
+                            There is a Weeknd track waiting for every kind of night.
+                        </p>
+                        <button class="button match-shuffle" id="shuffle-match" type="button">
+                            Surprise me ↻
+                        </button>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="facts-section" id="facts">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="section-number">04 — Did you know?</p>
+                    <h2>There is always another story.</h2>
+                </div>
+
+                <div class="fact-card">
+                    <div class="fact-content">
+                        <p id="fact-text" aria-live="polite">
+                            The Weeknd's birth name is Abel Makkonen Tesfaye.
+                        </p>
+                        <button class="button" id="fact-button" type="button">
+                            Give me another fact ✦
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-row container">
+            <p>Made for the XO fans like me · IS216 · 2026</p>
+            <p>
+                Concert photos:
+                <a href="https://commons.wikimedia.org/wiki/File:The_Weeknd_at_Bumbershoot_2015_(21367628469).jpg"
+                    target="_blank" rel="noopener noreferrer">Kayla Johnson</a>,
+                <a href="https://commons.wikimedia.org/wiki/File:The_Weeknd_(cropped).jpg"
+                    target="_blank" rel="noopener noreferrer">Vincent srv</a> and
+                <a href="https://commons.wikimedia.org/wiki/File:FEQ_July_2018_The_Weeknd_(44778857882).jpg"
+                    target="_blank" rel="noopener noreferrer">Nicolas Padovani</a>
+                · CC BY 2.0 / 4.0 · Album artwork via
+                <a href="https://music.apple.com/us/artist/the-weeknd/479756766"
+                    target="_blank" rel="noopener noreferrer">Apple Music</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ---------- INTERACTION 1: MUSICAL CHAPTER EXPLORER ----------
+        const eraButtons = document.querySelectorAll(".era-button");
+        const eraDisplay = document.querySelector("#era-display");
+        const eraTitle = document.querySelector("#era-title");
+        const eraYear = document.querySelector("#era-year");
+        const eraDescription = document.querySelector("#era-description");
+        const eraCover = document.querySelector("#era-cover");
+
+        eraButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                // First, remove the active state from every era button.
+                eraButtons.forEach(function (item) {
+                    item.classList.remove("active");
+                    item.setAttribute("aria-pressed", "false");
+                });
+
+                // Then, show the information stored in the clicked button's data attributes.
+                button.classList.add("active");
+                button.setAttribute("aria-pressed", "true");
+                eraTitle.textContent = button.dataset.title;
+                eraYear.textContent = button.dataset.year;
+                eraDescription.textContent = button.dataset.description;
+                eraDisplay.style.setProperty("--era-color", button.dataset.color);
+                eraCover.src = button.dataset.cover;
+                eraCover.alt = button.dataset.coverAlt;
+
+                // Restart the cover animation whenever a new project is selected.
+                eraCover.classList.remove("cover-changing");
+                void eraCover.offsetWidth;
+                eraCover.classList.add("cover-changing");
+            });
+        });
+
+        // ---------- INTERACTION 2: SONG MOOD MATCHER ----------
+        const moodButtons = document.querySelectorAll(".mood-button");
+        const moodResult = document.querySelector("#mood-result");
+        const matchSong = document.querySelector("#match-song");
+        const matchReason = document.querySelector("#match-reason");
+        const matchCover = document.querySelector("#match-cover");
+        const shuffleMatchButton = document.querySelector("#shuffle-match");
+        let currentMood = -1;
+
+        function showMoodMatch(button) {
+            moodButtons.forEach(function (item) {
+                item.classList.remove("active");
+                item.setAttribute("aria-pressed", "false");
+            });
+
+            button.classList.add("active");
+            button.setAttribute("aria-pressed", "true");
+            matchSong.textContent = button.dataset.song;
+            matchReason.textContent = button.dataset.reason;
+            matchCover.src = button.dataset.cover;
+            moodResult.style.setProperty("--match-color", button.dataset.color);
+            currentMood = Array.from(moodButtons).indexOf(button);
+
+            // Restart the reveal animation for each new result.
+            moodResult.classList.remove("is-changing");
+            matchCover.classList.remove("match-cover-changing");
+            void moodResult.offsetWidth;
+            moodResult.classList.add("is-changing");
+            matchCover.classList.add("match-cover-changing");
+        }
+
+        moodButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                showMoodMatch(button);
+            });
+        });
+
+        shuffleMatchButton.addEventListener("click", function () {
+            let randomMood = currentMood;
+
+            // Avoid recommending the same track twice in a row.
+            while (randomMood === currentMood) {
+                randomMood = Math.floor(Math.random() * moodButtons.length);
+            }
+
+            showMoodMatch(moodButtons[randomMood]);
+
+            const buttonPosition = shuffleMatchButton.getBoundingClientRect();
+            makeSparkles(
+                buttonPosition.left + buttonPosition.width / 2,
+                buttonPosition.top + buttonPosition.height / 2
+            );
+        });
+
+        // Start with a random recommendation so the result card is never empty.
+        showMoodMatch(moodButtons[Math.floor(Math.random() * moodButtons.length)]);
+
+        // ---------- INTERACTION 3: RANDOM FACT GENERATOR ----------
+        const facts = [
+            "The Weeknd's birth name is Abel Makkonen Tesfaye.",
+            "He was born and raised in Scarborough, a district of Toronto, Canada.",
+            "His first songs appeared anonymously online before listeners knew who he was.",
+            "In 2011, he released three mixtapes: House of Balloons, Thursday and Echoes of Silence.",
+            "He headlined the Super Bowl LV halftime show in 2021.",
+            "His cinematic music videos often connect to form a larger story across an album.",
+            "Hurry Up Tomorrow completed the album trilogy that began with After Hours and Dawn FM."
+        ];
+
+        const factText = document.querySelector("#fact-text");
+        const factButton = document.querySelector("#fact-button");
+        let currentFact = 0;
+
+        factButton.addEventListener("click", function (event) {
+            let newFact = currentFact;
+
+            // Keep choosing until we get a different fact from the current one.
+            while (newFact === currentFact) {
+                newFact = Math.floor(Math.random() * facts.length);
+            }
+
+            currentFact = newFact;
+            factText.textContent = facts[currentFact];
+            makeSparkles(event.clientX, event.clientY);
+        });
+
+        function makeSparkles(x, y) {
+            for (let i = 0; i < 10; i++) {
+                const sparkle = document.createElement("span");
+                sparkle.className = "sparkle";
+                sparkle.textContent = i % 2 === 0 ? "✦" : "·";
+                sparkle.style.left = x + "px";
+                sparkle.style.top = y + "px";
+                sparkle.style.color = i % 2 === 0 ? "#ed5148" : "#e5a25e";
+                sparkle.style.setProperty("--x", (Math.random() * 150 - 75) + "px");
+                sparkle.style.setProperty("--y", (Math.random() * 150 - 75) + "px");
+                document.body.appendChild(sparkle);
+
+                setTimeout(function () {
+                    sparkle.remove();
+                }, 800);
+            }
+        }
+
+        // ---------- INTERACTION 4: THEME SWITCHER ----------
+        const themeButton = document.querySelector("#theme-button");
+
+        themeButton.addEventListener("click", function () {
+            const lightModeIsOn = document.body.classList.toggle("light-theme");
+            themeButton.textContent = lightModeIsOn ? "☾" : "☀";
+            themeButton.setAttribute("aria-pressed", lightModeIsOn);
+            themeButton.setAttribute(
+                "aria-label",
+                lightModeIsOn ? "Switch to dark theme" : "Switch to light theme"
+            );
+        });
+    </script>
+</body>
+</html>
